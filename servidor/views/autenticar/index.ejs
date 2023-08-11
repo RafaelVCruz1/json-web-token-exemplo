@@ -10,10 +10,10 @@
 <body>
   <div class="login-container">
     <h2>Faça o Login</h2>
-    <form>
-      <input class="login-input" type="text" placeholder="Nome de usuário" required>
-      <input class="login-input" type="password" placeholder="Senha" required>
-      <button class="login-button" type="submit">Login</button>
+    <form action="logar" method="POST">
+      <input class="login-input" id="username" type="text" placeholder="Nome de usuário" name="usuario" value="" required>
+      <input class="login-input" id="senha" type="password" placeholder="Senha" name="senha" value="" required>
+      <input class="login-input" id="submit" type="submit" name="Enviar" value="Enviar"/>
     </form>
   </div>
 </body>
