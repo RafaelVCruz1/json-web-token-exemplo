@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Cadastro</title>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Faça o seu Cadastro</h2>
+    <form action="/usuario/cadastrar" method="POST">
+      <input class="login-input" id="username" type="text" placeholder="Nome de usuário" name="usuario" value="" required>
+      <input class="login-input" id="senha" type="password" placeholder="Senha" name="senha" value="" required>
+      <input class="login-input" id="confirmesenha" type="password" placeholder="Confirme a senha" name="confirmesenha" value="" required>
+      <input class="login-input" id="submit" type="submit" name="Enviar" value="Enviar"/>
+    </form>
+  </div>
+  <script>
+      const checaSenha = () => {
+        const s1 = document.getElementById("senha").value 
+      }
+
+  </script>
+</body>
+</html>
