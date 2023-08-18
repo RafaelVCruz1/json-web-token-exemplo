@@ -10,17 +10,14 @@
 <body>
   <div class="login-container">
     <h2>Faça o seu Cadastro</h2>
-    <form action="/usuario/cadastrar" method="POST">
-      <input class="login-input" id="username" type="text" placeholder="Nome de usuário" name="usuario" value="" required>
-      <input class="login-input" id="senha" type="password" placeholder="Senha" name="senha" value="" required>
-      <input class="login-input" id="confirmesenha" type="password" placeholder="Confirme a senha" name="confirmesenha" value="" required>
-      <input class="login-input" id="submit" type="submit" name="Enviar" value="Enviar"/>
+    <form action="/usuarios/cadastrar" method="POST">
+      <input class="login-input"  type="text" placeholder="Nome de usuário" name="usuario" required>
+      <input class="login-input" type="password" placeholder="Senha" name="senha"  required>
+      <input class="login-input" type="password" placeholder="Confirme a senha" name="confirmesenha"  required>
+      <input class="login-input"  type="submit" name="Enviar" value="Enviar"/>
     </form>
   </div>
   <script>
-      const checaSenha = () => {
-        const s1 = document.getElementById("senha").value 
-      }
 
   </script>
 </body>
