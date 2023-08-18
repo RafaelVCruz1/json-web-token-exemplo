@@ -39,10 +39,13 @@ app.get('/usuarios/cadastrar', async function(req, res){
 
 app.post('/usuarios/cadastrar', async function(req, res){
   if(req.body.senha === req.body.confirmesenha){
-    res.json("cadastro no sucesso")
-  }else{
-    res.json('cadastro falho')
-  }
+    return res.json({
+      usuario: req.body.usuario,
+      status:"cadastrado"
+    })
+    } else{
+      return res.json("Não possivel cadastrar")
+    }
  })
 
 
