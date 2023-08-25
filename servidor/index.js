@@ -38,17 +38,29 @@ app.get('/usuarios/cadastrar', async function(req, res){
 })
 
 app.post('/usuarios/cadastrar', async function(req, res){
-  if(req.body.senha === req.body.confirmesenha){
-    return res.json({
-      usuario: req.body.usuario,
-      status:"cadastrado"
-    })
+
+  if( req.body.senha == req.body.confirmesenha){
+   await usuario.create(req.body);
+   res.redirect("/usuarios/listar")
     } else{
-      return res.json("Não possivel cadastrar")
+     res.status(500).json({mensagem: "não foi possível cadastrar"})
     }
  })
 
 
+
+ app.get('/usuarios/listar', async function(req, res){
+try{
+  const list = await usuario.findAll();
+  res.render('listar', {list})
+  
+}catch(error){
+  console.error(error);
+  res.status(500).send("Erro ao listar")
+}
+ })
+
+ 
 app.get('/', async function(req, res){
   res.render("home")
 })
