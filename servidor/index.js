@@ -1,3 +1,5 @@
+const crypto = require("./crypto");
+
 // JWT
 require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
@@ -38,14 +40,27 @@ app.get('/usuarios/cadastrar', async function (req, res) {
 })
 
 app.post('/usuarios/cadastrar', async function (req, res) {
-
-  if (req.body.senha == req.body.confirmesenha) {
-    await usuario.create(req.body);
-    res.redirect("/usuarios/listar")
-  } else {
-    res.status(500).json({ mensagem: "não foi possível cadastrar" })
+  try {
+    let userRepetido = await usuario.findOne({ where: { usuario: req.body.usuario } });
+    if (await usuario.findOne({ where: { usuario: req.body.usuario } })) {
+      res.status(500).send("O usuário já existe");
+    } else {
+      if (req.body.senha == req.body.confirmesenha) {
+        await usuario.create({
+          usuario: req.body.usuario,
+          senha: crypto.encrypt(req.body.senha),
+        });
+        res.redirect("/autenticar");
+      } else {
+        res.status(500).send("As senhas devem ser idênticas");
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erro ao cadastrar usuário");
   }
-})
+});
+
 
 
 
@@ -65,23 +80,27 @@ app.get('/', async function (req, res) {
   res.render("home")
 })
 
-app.post('/logar', (req, res) => {
-
-  if (req.body.usuario == "homem" && req.body.senha == "12345") {
-    const id = 1;
-    const token = jwt.sign({id}, process.env.SECRET, {
-     expiresIn: 300
-    });
-    res.cookie("token", token, {httponly:true})
-    return res.json({
-    usuario:req.body.usuario,
-   token: token
-})
-  } else {
-    res.status(500).json({mensagem:"login inválido"})  
+app.post('/logar', async function (req, res) {
+  try {
+    const user = await usuario.findOne({ where: { usuario: req.body.usuario } });
+    let userSenha = crypto.decrypt(user.senha);
+    if (req.body.senha === userSenha) {
+      const id = user.id;
+      const token = jwt.sign({ id }, process.env.SECRET, {
+        expiresIn: 300
+      });
+      console.log("Teste de achar")
+      res.cookie("token", token, { httpOnly: true });
+      return res.redirect("/usuarios/listar");
+      
+    } else {
+      res.status(500).send("Senha inválida");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erro ao autenticar usuário");
   }
-})
-
+});
 
  
 
