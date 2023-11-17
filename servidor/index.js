@@ -5,6 +5,15 @@ require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
+const corsOpcoes = {
+  //CLIENTE QUE FARÁ O ACESSO
+  origin: "http://localhost:3000",
+  //MÉTODOS QUE O CLIENTE PODE EXECUTAR
+  methods: "GET,PUT,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true
+}
+
 
 var cookieParser = require('cookie-parser')
 
@@ -15,8 +24,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(cors());
-
+app.use(cors(corsOpcoes))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -67,7 +75,7 @@ app.post('/usuarios/cadastrar', async function (req, res) {
 app.get('/usuarios/listar', async function (req, res) {
   try {
     const list = await usuario.findAll();
-    res.render('listar', { list })
+    res.json(list)
 
   } catch (error) {
     console.error(error);
@@ -90,7 +98,10 @@ app.post('/logar', async function (req, res) {
         expiresIn: 300
       });
       console.log("Teste de achar")
-      res.cookie("token", token, { httpOnly: true });
+      res.cookie("token", token, { httpOnly: true }).json({
+        nome: user.usuario,
+        token: token
+      });
       return res.redirect("/usuarios/listar");
       
     } else {
