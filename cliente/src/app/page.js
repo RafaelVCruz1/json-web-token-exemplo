@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
   const [user, setUser] = useState({
-    email: '',
+    name: '',
     password: '',
   });
   const { push, refresh } = useRouter();
@@ -33,9 +33,9 @@ export default function Login() {
       <div>
         <input
           className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
-          placeholder="E-mail"
-          type="email"
-          onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
+          placeholder="Nome"
+          type="text"
+          onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
         />
       </div>
       <div>

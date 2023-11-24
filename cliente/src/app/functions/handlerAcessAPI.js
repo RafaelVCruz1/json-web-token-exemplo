@@ -1,11 +1,11 @@
 "use server";
 
-const url = "https://aula-17-10-bice.vercel.app"
+const url = "http://localhost:4000"
 
 
 
 const getUserAuthenticated = async (user) => {
-const rest = await fetch(url + "/user/authenticated",
+const rest = await fetch(url + "/logar",
 
   {
       cache: 'no-cache',
