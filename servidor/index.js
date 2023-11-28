@@ -98,7 +98,7 @@ app.post('/logar', async function (req, res) {
         expiresIn: 300
       });
       console.log("Teste de achar")
-      res.cookie("token", token, { httpOnly: true }).json({
+     return res.cookie("token", token, { httpOnly: true }).json({
         nome: user.usuario,
         token: token
       });

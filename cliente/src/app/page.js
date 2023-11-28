@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
   const [user, setUser] = useState({
-    name: '',
-    password: '',
+    usuario: '',
+    senha: '',
   });
   const { push, refresh } = useRouter();
 
@@ -35,7 +35,7 @@ export default function Login() {
           className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
           placeholder="Nome"
           type="text"
-          onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, usuario: e.target.value }) }}
         />
       </div>
       <div>
@@ -43,7 +43,7 @@ export default function Login() {
           className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
           placeholder="Senha"
           type="password"
-          onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, senha: e.target.value }) }}
         />
       </div>
       <div className="text-center">
