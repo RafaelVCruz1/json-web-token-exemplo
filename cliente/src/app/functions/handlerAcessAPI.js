@@ -2,9 +2,10 @@
 
 const url = "http://localhost:4000"
 
-
+import {cookies} from "next/headers"
 
 const getUserAuthenticated = async (user) => {
+  try{
 const rest = await fetch(url + "/logar",
   {
       cache: 'no-cache',
@@ -16,13 +17,19 @@ const rest = await fetch(url + "/logar",
 )
   const userAuth = await rest.json()
   return userAuth
+}catch(error){
+  return { error: error.message}
+}
 }
 
 const postUser = async (user) => {
+  const token = cookies().get("token")?.value;
+
   try{
-    const responseOfApi = await fetch(url + "/user", {
+    const responseOfApi = await fetch(url + "/usuarios/cadastrar", {
       method: 'POST',
-      headers: {'Content-Type': 'Aplication/json' },
+      headers: {'Content-Type': 'Aplication/json',
+      Cookie: `token=${token}`, },
       body: JSON.stringify(user)
     })
     const userSave = await responseOfApi.json();
@@ -34,10 +41,27 @@ const postUser = async (user) => {
 
 
 
-const getUsers = async () => {
-  const response = await fetch(url + "/usuarios/listar", {next: {revalidate: 15}})
+const getUsers = async (user) => {
+  const token = cookies().get("token")?.value;
+
+try{
+  const response = await fetch(url + "/usuarios/listar", {
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "Application/json",
+      Cookie: `token=${token}`,
+    },
+    body: JSON.stringify(user),
+  });
+  
   const users = await response.json()
   return users
+}
+
+catch{
+  return null
+}
+  
 };
 
 export { getUsers, getUserAuthenticated, postUser};

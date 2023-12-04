@@ -17,7 +17,7 @@ export default function Login() {
     try {
       const userAuth = await handlerAcessUser(user)
       if (userAuth.token === undefined) {
-        toast.error("E-mail ou senha invalidos")
+        toast.error("Usuário ou senha invalidos")
       }
         push("/pages/dashboard");
     } catch {

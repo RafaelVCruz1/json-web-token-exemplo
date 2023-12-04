@@ -9,10 +9,7 @@ const validateToken = async (token)=> {
         if(isTokenValid){
             return true
         }
-        /*const isTokenValidate = await jwtVerify (token, new TextEncoder().encode(tokenzinho))
-        if (isTokenValidate) {
-            return true;
-        }*/
+        
     }catch (error){
         return false;
     }

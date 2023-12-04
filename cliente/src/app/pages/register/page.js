@@ -9,9 +9,9 @@ export default function Register() {
 
    const [user, setUser] = useState({
 
-    name: '',
-    email: '',
-    password: '',
+    usuario: '',
+    senha: '',
+    confirmesenha: '',
   
    });
 
@@ -21,11 +21,12 @@ export default function Register() {
     e.preventDefault();
     try {
 
-        if (user.name == "" || user.email == "" || user.password == "") {
+        if (user.usuario == "" || user.senha == "") {
             toast.error("Preencha todos os campos");
             return;
         } 
         else {
+            console.log("teste")
             await postUser(user)
             return push('/pages/dashboard')
         }
@@ -46,23 +47,24 @@ export default function Register() {
           className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
           placeholder="Nome"
           type="text"
-          onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, usuario: e.target.value }) }}
         />
       </div>
-      <div>
-        <input
-          className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
-          placeholder="E-mail"
-          type="email"
-          onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
-        />
-      </div>
+    
       <div>
         <input
           className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
           placeholder="Senha"
           type="password"
-          onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, senha: e.target.value }) }}
+        />
+      </div>
+      <div>
+        <input
+          className="w-full px-4 py-2 rounded-lg border border-custom-3 focus:border-custom-1 focus:ring-2 focus:ring-custom-1"
+          placeholder="Confirme a Senha"
+          type="password"
+          onChange={(e) => { setUser({ ...user, confirmesenha: e.target.value }) }}
         />
       </div>
       <div className="text-center">

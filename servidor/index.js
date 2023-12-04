@@ -49,7 +49,7 @@ app.get('/usuarios/cadastrar', async function (req, res) {
 
 app.post('/usuarios/cadastrar', async function (req, res) {
   try {
-    let userRepetido = await usuario.findOne({ where: { usuario: req.body.usuario } });
+    //let userRepetido = await usuario.findOne({ where: { usuario: req.body.usuario } });
     if (await usuario.findOne({ where: { usuario: req.body.usuario } })) {
       res.status(500).send("O usuário já existe");
     } else {
@@ -58,7 +58,8 @@ app.post('/usuarios/cadastrar', async function (req, res) {
           usuario: req.body.usuario,
           senha: crypto.encrypt(req.body.senha),
         });
-        res.redirect("/autenticar");
+        console.log("criou")
+        res.redirect("/usuarios/listar");
       } else {
         res.status(500).send("As senhas devem ser idênticas");
       }
@@ -98,7 +99,7 @@ app.post('/logar', async function (req, res) {
         expiresIn: 300
       });
       console.log("Teste de achar")
-     return res.cookie("token", token, { httpOnly: true }).json({
+      res.cookie("token", token, { httpOnly: true }).json({
         nome: user.usuario,
         token: token
       });
