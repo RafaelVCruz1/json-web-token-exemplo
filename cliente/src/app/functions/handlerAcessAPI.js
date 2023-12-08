@@ -6,7 +6,7 @@ import {cookies} from "next/headers"
 
 const getUserAuthenticated = async (user) => {
   try{
-const rest = await fetch(url + "/logar",
+const responseOfApi = await fetch(url + "/logar",
   {
       cache: 'no-cache',
       method: "POST",
@@ -15,7 +15,7 @@ const rest = await fetch(url + "/logar",
   }
 
 )
-  const userAuth = await rest.json()
+  const userAuth = await responseOfApi.json()
   return userAuth
 }catch(error){
   return { error: error.message}
@@ -29,13 +29,14 @@ const postUser = async (user) => {
     const responseOfApi = await fetch(url + "/usuarios/cadastrar", {
       method: 'POST',
       headers: {'Content-Type': 'Aplication/json',
-      Cookie: `token=${token}`, },
+      Cookie: `token=${token}`, 
+    },
       body: JSON.stringify(user)
     })
     const userSave = await responseOfApi.json();
     return userSave;
-  } catch {
-    return null
+  } catch(error){
+    return { error: error.message}
   }
 }
 
@@ -45,7 +46,7 @@ const getUsers = async (user) => {
   const token = cookies().get("token")?.value;
 
 try{
-  const response = await fetch(url + "/usuarios/listar", {
+  const responseOfApi = await fetch(url + "/usuarios/listar", {
     cache: "no-cache",
     headers: {
       "Content-Type": "Application/json",
@@ -54,14 +55,10 @@ try{
     body: JSON.stringify(user),
   });
   
-  const users = await response.json()
+  const users = await responseOfApi.json()
   return users
-}
-
-catch{
-  return null
-}
-  
-};
+}catch(error){
+  return { error: error.message}
+}}
 
 export { getUsers, getUserAuthenticated, postUser};

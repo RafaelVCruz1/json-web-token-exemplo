@@ -35,7 +35,7 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/autenticar", "/logar", "/deslogar"] })
+  }).unless({ path: ["/autenticar", "/logar", "/deslogar"], })
 );
 
 app.get('/autenticar', async function (req, res) {
@@ -53,17 +53,13 @@ app.post('/usuarios/cadastrar', async function (req, res) {
     if (await usuario.findOne({ where: { usuario: req.body.usuario } })) {
       res.status(500).send("O usuário já existe");
     } else {
-      if (req.body.senha == req.body.confirmesenha) {
         await usuario.create({
           usuario: req.body.usuario,
           senha: crypto.encrypt(req.body.senha),
         });
         console.log("criou")
         res.redirect("/usuarios/listar");
-      } else {
-        res.status(500).send("As senhas devem ser idênticas");
       }
-    }
   } catch (error) {
     console.error(error);
     res.status(500).send("Erro ao cadastrar usuário");
@@ -105,7 +101,9 @@ app.post('/logar', async function (req, res) {
       });
       
       //return res.json(user)
-    } 
+    } else{
+      res.status(500).json({error: "Algum campo está errado"})
+    }
     
   } catch (error) {
     console.error(error);
@@ -123,5 +121,5 @@ app.post('/deslogar', function (req, res) {
 })
 
 app.listen(4000, function () {
-  console.log('App de Exemplo escutando na porta 3000!')
+  console.log('App de Exemplo escutando na porta 4000!')
 });

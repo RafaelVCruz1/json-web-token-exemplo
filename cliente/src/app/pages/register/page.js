@@ -21,14 +21,18 @@ export default function Register() {
     e.preventDefault();
     try {
 
-        if (user.usuario == "" || user.senha == "") {
-            toast.error("Preencha todos os campos");
+        if (user.usuario == "" || user.senha == "" || user.senha !== user.confirmesenha) {
+            toast.error("Preencha todos os campos corretamente");
             return;
         } 
         else {
             console.log("teste")
             await postUser(user)
-            return push('/pages/dashboard')
+            toast.success("Cadastrado com sucesso!")
+            setTimeout(() => {
+              push('/pages/dashboard')
+            }, 1500)
+          
         }
     } 
         catch {
